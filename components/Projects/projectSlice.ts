@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { httpsCallable, HttpsCallableResult } from 'firebase/functions';
+import { HttpsCallableResult } from 'firebase/functions';
 
-import { functions } from '../../lib/firebase';
 import type { AppState } from '../../lib/store';
 
 export interface Project {
@@ -68,14 +67,6 @@ export const createProjectAsync = createAsyncThunk('projects/create', async ({ n
   return response;
 });
 
-export const getProjectsAsync = createAsyncThunk('projects/', async () => {
-  const response = await postRequest(`${process.env.NEXT_PUBLIC_API_URL}/projects/`, {
-    userUID: 'bacis.testnet',
-  });
-
-  return response;
-});
-
 export const projectSlice = createSlice({
   name: 'projects',
   initialState,
@@ -91,7 +82,6 @@ export const projectSlice = createSlice({
       })
       .addCase(projectsAsync.fulfilled, (state, action) => {
         state.status = 'done';
-        // state.value = action.payload as any;
         state.projects = action.payload as any;
       })
       .addCase(createProjectAsync.pending, (state) => {
