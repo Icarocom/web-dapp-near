@@ -3,12 +3,19 @@ import * as React from 'react';
 import { AddProject, ProjectCard, ProjectFilter } from '../../items';
 import type { Project } from '../projectSlice';
 
+interface ProjectProp {
+  name: string;
+  description: string;
+  image: string;
+}
+
 interface Props {
   projects: Project[];
   onAdd: () => void;
+  onSelect: (project: ProjectProp) => void;
 }
 
-export const MyProjects: React.FC<Props> = ({ onAdd, projects }) => {
+export const MyProjects: React.FC<Props> = ({ onAdd, projects, onSelect }) => {
   return (
     <div className="w-full space-y-8">
       <div>
@@ -22,7 +29,7 @@ export const MyProjects: React.FC<Props> = ({ onAdd, projects }) => {
           <div className="flex justify-center flex-wrap gap-6">
             <AddProject onAdd={() => onAdd()} />
             {projects.map((project) => {
-              return <ProjectCard key={project.name} project={project} />;
+              return <ProjectCard key={project.name} onClick={() => onSelect(project)} project={project} />;
             })}
           </div>
         </div>

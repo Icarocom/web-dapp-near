@@ -11,6 +11,7 @@ module.exports = {
         64: '264px',
         70: '80vw',
         '72p': '72px',
+        '100p': '100px',
         80: '360px',
         312: '312px',
         308: '308px',
@@ -20,12 +21,13 @@ module.exports = {
         22: '90px',
         60: '60px',
         72: '72px',
+        '92p': '92px',
+        '100p': '100px',
         80: '334px',
         210: '210px',
       },
     },
   },
-  important: true,
   variants: {
     extend: {
       backgroundColor: ['active', 'disabled'],

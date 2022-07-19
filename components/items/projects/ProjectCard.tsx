@@ -8,9 +8,10 @@ interface Project {
 
 interface Props {
   project: Project;
+  onClick: () => void;
 }
 
-export const ProjectCard: React.FC<Props> = ({ project }) => {
+export const ProjectCard: React.FC<Props> = ({ project, onClick }) => {
   const url = project.image;
   const avatarRef = useRef(null);
 
@@ -19,11 +20,14 @@ export const ProjectCard: React.FC<Props> = ({ project }) => {
   }, []);
 
   return (
-    <div className="border border-lightGrey w-312 sm:w-308 md:w-64 h-80 rounded-3xl bg-white flex flex-col items-center ">
+    <div
+      className="border border-lightGrey w-312 sm:w-308 md:w-64 h-80 rounded-3xl bg-white flex flex-col items-center cursor-pointer"
+      onClick={() => onClick()}
+    >
       <div className="flex flex-col items-center justify-between w-full h-210 py-6">
         <div className="w-72p h-72 bg-primary rounded-full bg-cover bg-no-repeat bg-center" ref={avatarRef}></div>
         <div className="flex flex-col items-center">
-          <p className="text-heading-md uppercase">{project.name}</p>
+          <p className="text-heading-md uppercase text-center">{project.name}</p>
           <p className="font-normal text-body-sm text-darkGrey">{project.description}</p>
         </div>
         <div className="w-24 h-1 rounded-md bg-lightGrey"></div>

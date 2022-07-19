@@ -34,9 +34,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
-      {walletConnection ? <Navbar walletConnection={walletConnection} user={nearUser} /> : null}
-      <Component {...pageProps} />
-      <Toaster />
+      <div className="relative">
+        {walletConnection ? <Navbar walletConnection={walletConnection} user={nearUser} /> : null}
+        <Component {...pageProps} />
+        <Toaster />
+      </div>
     </Provider>
   );
 }

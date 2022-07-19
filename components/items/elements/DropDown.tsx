@@ -40,7 +40,7 @@ export const DropDown: React.FC<Props> = ({ name, value, items }) => {
       </div>
       <div className="absolute right-3 top-6">{isOpen ? <DropdownUpIcon /> : <DropdownDownIcon />}</div>
       {isOpen && (
-        <div className="absolute py-4 w-44 border border-lightGrey rounded-xl top-16 left-0 bg-white">
+        <div className="absolute py-4 w-44 border border-lightGrey rounded-xl top-16 left-0 bg-white z-10">
           {items.map((item) => {
             return (
               <div

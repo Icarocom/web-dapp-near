@@ -28,10 +28,10 @@ export const AddNewProject: React.FC<Props> = ({ onAdded, onBack }) => {
     <div className="w-full max-w-md space-y-8">
       <div className="">
         <div
-          className="absolute invisible xs:visible sm:left-14 md:left-40 w-14 h-14 rounded-full bg-white shadow-2xl flex items-center justify-center cursor-pointer"
+          className="group absolute invisible xs:visible sm:left-14 md:left-40 w-14 h-14 rounded-full bg-white hover:bg-black shadow-2xl flex items-center justify-center cursor-pointer"
           onClick={() => onBack()}
         >
-          <BackIcon className="text-darkGrey" />
+          <BackIcon className="text-darkGrey group-hover:text-white" />
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-heading-xl text-center text-gray-900">
           ADD NEW PROJECT
