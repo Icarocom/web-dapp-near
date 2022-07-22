@@ -9,13 +9,17 @@ const BALL_BASE_CLASSES = 'absolute w-7 h-7 rounded-full bg-white cursor-pointer
 const BALL_ACTIVE_CLASSES = 'top-[2px] right-[2px]';
 const BALL_INACTIVE_CLASSES = 'top-[2px] left-[2px] shadow-3xl';
 
-export const SwitchBox: React.FC = () => {
-  const [isOn, setIsOn] = useState(true);
+interface Props {
+  label: boolean;
+  isOn: boolean;
+  onChange: () => void;
+}
 
+export const SwitchBox: React.FC<Props> = ({ label, isOn, onChange }) => {
   return (
     <div className="flex justify-center items-center gap-4">
-      <p className="text-body-md text-darkGrey hidden xs:block">{isOn ? 'Active' : 'InActive'}</p>
-      <div className={clsx(BASE_CLASSES, isOn ? ON_CLASSES : OFF_CLASSES)} onClick={() => setIsOn(!isOn)}>
+      {label && <p className="text-body-md text-darkGrey hidden xs:block">{isOn ? 'Active' : 'InActive'}</p>}
+      <div className={clsx(BASE_CLASSES, isOn ? ON_CLASSES : OFF_CLASSES)} onClick={() => onChange()}>
         <div className={clsx(BALL_BASE_CLASSES, isOn ? BALL_ACTIVE_CLASSES : BALL_INACTIVE_CLASSES)}></div>
       </div>
     </div>

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 
 import { Input } from 'components/items/elements';
 
-import { COUNTRIES } from './selector/countries';
-import { CountrySelector } from './selector/selector';
 import { FileInputPreview } from './fileInput/fileInput';
 import { loginAsync } from './authSlice';
 
@@ -44,14 +42,6 @@ export function ProfileForm() {
         <Input label="First name" value={firstName} onChange={(fname) => setFirstName(fname)} />
         <Input label="Last name" value={lastName} onChange={(lname) => setLastName(lname)} />
         <Input label="Email address" value={emailAddress} type="email" onChange={(email) => setEmailAddress(email)} />
-        <CountrySelector
-          id={'countries'}
-          ref={countryRef}
-          open={isOpen}
-          onToggle={() => setIsOpen(!isOpen)}
-          onChange={(val: string) => setCountry(val)}
-          selectedValue={COUNTRIES.find((option) => option.value === country) as SelectMenuOption}
-        />
         <Input label="Address" value={address} onChange={(address) => setAddress(address)} />
       </div>
       <button

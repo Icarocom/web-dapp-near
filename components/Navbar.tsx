@@ -89,7 +89,12 @@ export default function Navbar(props) {
               <button className="p-2 sm:p-3 xs:p-4 rounded-full border-2 border-lightGrey bg-white hover:bg-lightGrey flex flex-row justify-center items-center">
                 <NearIcon className="text-black w-4 h-4 sm:w-6 sm:h-6" />
               </button>
-              <button className="group sm:p-3 xs:p-4 rounded-full bg-lightGrey hover:bg-black sm:flex flex-row justify-center items-center hidden">
+              <button
+                className="group sm:p-3 xs:p-4 rounded-full bg-lightGrey hover:bg-black sm:flex flex-row justify-center items-center hidden"
+                onClick={() => {
+                  Router.push('/settings');
+                }}
+              >
                 <SettingsIcon className="text-black group-hover:text-white" />
               </button>
               <button

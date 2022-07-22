@@ -69,7 +69,6 @@ export default function Projects() {
           <ProjectDetails onBack={() => setStatus(allStatus.explorer)} project={selectedProject} />
         )}
       </div>
-      {/* <div className="absolute top-0 left-0 w-full min-h-screen backdrop-brightness-95"></div> */}
     </main>
   );
 }

@@ -4,8 +4,10 @@ import type { AppProps } from 'next/app';
 import type { Contract, WalletConnection } from 'near-api-js';
 import { useState, useEffect } from 'react';
 
+import 'swiper/css/bundle';
 // tailwind
 import '../styles/index.css';
+import '../styles/swiper.css';
 
 // fonts
 import '@fontsource/anton/latin.css';

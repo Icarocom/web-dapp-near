@@ -3,17 +3,19 @@ import clsx from 'clsx';
 
 import { DropdownDownIcon, DropdownUpIcon } from 'components/icons';
 
-const BASE_DROPDOWN_CLASSES = clsx('w-44 py-4 pl-3 pr-7 relative rounded-xl cursor-pointer border');
+const BASE_DROPDOWN_CLASSES = clsx('py-4 pl-3 pr-7 relative cursor-pointer border');
 const OPENED_DROPDOWN_CLASSES = clsx('border-primary');
 const CLOSED_DROPDOWN_CLASSES = clsx('border-lightGrey');
 
 interface Props {
   name: string;
   value: string;
+  label?: boolean;
+  className?: string;
   items: string[];
 }
 
-export const DropDown: React.FC<Props> = ({ name, value, items }) => {
+export const DropDown: React.FC<Props> = ({ name, value, label, className, items }) => {
   const dropDownRef = useRef(null);
 
   const [selectedValue, setSelectedValue] = useState(value);
@@ -31,16 +33,26 @@ export const DropDown: React.FC<Props> = ({ name, value, items }) => {
 
   return (
     <div
-      className={clsx(BASE_DROPDOWN_CLASSES, isOpen ? OPENED_DROPDOWN_CLASSES : CLOSED_DROPDOWN_CLASSES)}
+      className={clsx(
+        BASE_DROPDOWN_CLASSES,
+        isOpen ? OPENED_DROPDOWN_CLASSES : CLOSED_DROPDOWN_CLASSES,
+        className ? className : ''
+      )}
       ref={dropDownRef}
       onClick={() => setIsOpen(!isOpen)}
     >
       <div className="flex flex-row items-center text-body-md">
-        {name}: {selectedValue}
+        {label ? `${name}: ` : ''}
+        {selectedValue}
       </div>
       <div className="absolute right-3 top-6">{isOpen ? <DropdownUpIcon /> : <DropdownDownIcon />}</div>
       {isOpen && (
-        <div className="absolute py-4 w-44 border border-lightGrey rounded-xl top-16 left-0 bg-white z-10">
+        <div
+          className={clsx(
+            'absolute py-4 border border-lightGrey top-16 left-0 bg-white z-10',
+            className ? className : ''
+          )}
+        >
           {items.map((item) => {
             return (
               <div
