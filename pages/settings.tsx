@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper';
 
-0;
 import { CloseIcon, NearIcon } from 'components/icons';
 import Metatags from 'components/Metatags';
 import { Input, SwitchBox } from 'components/items/elements';
