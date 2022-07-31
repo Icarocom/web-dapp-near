@@ -8,14 +8,16 @@ interface Props {
 
 export const FileInputPreview: React.FC<Props> = ({ imageChanged }) => {
   const defaultImage = '/user.png';
-  const previewRef = useRef(null);
-  const imageInputRef = useRef(null);
-  const [file, setFile] = useState(defaultImage);
+  const previewRef = useRef<HTMLDivElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState<string | ArrayBuffer | null>(defaultImage);
   const [isSelected, setSelected] = useState(false);
 
-  const ImageChanged = (e) => {
+  const ImageChanged = (e: any) => {
     e.preventDefault();
-    const files = imageInputRef.current.files[0];
+    let files;
+
+    if (imageInputRef.current?.files !== null) files = imageInputRef.current?.files[0];
 
     if (files) {
       const fileReader = new FileReader();
@@ -37,8 +39,7 @@ export const FileInputPreview: React.FC<Props> = ({ imageChanged }) => {
   };
 
   useEffect(() => {
-    imageChanged && imageChanged(file);
-    previewRef.current.style.backgroundImage = `url(` + file + `)`;
+    if (previewRef.current !== null) previewRef.current.style.backgroundImage = `url(` + file + `)`;
   }, [file]);
 
   return (

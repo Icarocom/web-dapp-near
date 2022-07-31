@@ -3,10 +3,20 @@ import { HttpsCallableResult } from 'firebase/functions';
 
 import type { AppState } from '../../lib/store';
 
+export interface NFTProp {
+  name: string;
+  description: string;
+  image: string;
+  label: string;
+  position: string;
+  status: boolean;
+}
+
 export interface Project {
   name: string;
   description: string;
   image: string;
+  nfts: Array<NFTProp>;
 }
 
 export interface Projects {
@@ -49,29 +59,46 @@ export const postRequest = async (url: string, body: any) => {
 };
 
 export const projectsAsync = createAsyncThunk('projects/get', async () => {
-  const response = await postRequest(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
+  const response: any = await postRequest(`${process.env.NEXT_PUBLIC_API_URL}/projects`, {
     userUID: 'bacis.testnet',
   });
 
-  return response;
+  let result: Project[] = [];
+
+  if (response.data !== null) {
+    result = response.data.map((item: any, index: any) => {
+      return { ...item, nfts: [] };
+    });
+
+    return { data: result };
+  } else {
+    return [];
+  }
 });
 
-export const createProjectAsync = createAsyncThunk('projects/create', async ({ name, description, image }: Project) => {
-  const response = await postRequest(`${process.env.NEXT_PUBLIC_API_URL}/projects/create`, {
-    userUID: 'bacis.testnet',
-    name,
-    description,
-    image,
-  });
+export const createProjectAsync = createAsyncThunk(
+  'projects/create',
+  async ({ name, description, image, nfts }: Project) => {
+    const response = await postRequest(`${process.env.NEXT_PUBLIC_API_URL}/projects/create`, {
+      userUID: 'bacis.testnet',
+      nfts,
+      name,
+      description,
+      image,
+    });
 
-  return response;
-});
+    return response;
+  }
+);
 
 export const projectSlice = createSlice({
   name: 'projects',
   initialState,
   reducers: {
     addProjectAction: (state, action) => {
+      if (state.projects?.data) state.projects.data = action.payload;
+    },
+    addNewNFTAction: (state, action) => {
       if (state.projects?.data) state.projects.data = action.payload;
     },
   },
@@ -94,7 +121,7 @@ export const projectSlice = createSlice({
   },
 });
 
-export const { addProjectAction } = projectSlice.actions;
+export const { addProjectAction, addNewNFTAction } = projectSlice.actions;
 
 export const selectProjects = (state: AppState) => state.projects.value;
 

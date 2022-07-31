@@ -4,15 +4,17 @@ import { DropDown, Input, TextEdit } from 'components/items/elements';
 
 import { FileInputPreview } from '../../Auth/fileInput/fileInput';
 import { BackIcon, CloseIcon, CheckIcon } from '../../icons';
+import { NFTProp } from '../projectSlice';
 
 interface Props {
   onAdded: () => void;
   onBack: () => void;
+  onNewNFT: (nft: NFTProp) => void;
 }
 
-export const AddNewNFT: React.FC<Props> = ({ onAdded, onBack }) => {
-  const nftPreviewRef = useRef(null);
-  const smallNftPreviewRef = useRef(null);
+export const AddNewNFT: React.FC<Props> = ({ onAdded, onBack, onNewNFT }) => {
+  const nftPreviewRef = useRef<HTMLDivElement>(null);
+  const smallNftPreviewRef = useRef<HTMLDivElement>(null);
 
   const creatingStatus = {
     idle: 'idle',
@@ -23,7 +25,7 @@ export const AddNewNFT: React.FC<Props> = ({ onAdded, onBack }) => {
   const [steps, setSteps] = useState(1);
 
   const [name, setName] = useState('');
-  // const [type, setType] = useState('');
+
   const [label, setLabel] = useState('');
   const [description, setDescription] = useState('');
 
@@ -36,6 +38,14 @@ export const AddNewNFT: React.FC<Props> = ({ onAdded, onBack }) => {
   const proceeedCreating = () => {
     setIsVisibleCreatingModal(true);
     setCurrentCreatingStatus(creatingStatus.uploading);
+    onNewNFT({
+      name: name,
+      description: description,
+      image: image,
+      label: label,
+      position: '',
+      status: true,
+    });
     setTimeout(() => successfullyCreated(), 2000);
   };
 
@@ -50,8 +60,9 @@ export const AddNewNFT: React.FC<Props> = ({ onAdded, onBack }) => {
 
   useEffect(() => {
     if (currentCreatingStatus == creatingStatus.created) {
-      nftPreviewRef.current.style.backgroundImage = 'url(' + image + ')';
-      smallNftPreviewRef.current.style.backgroundImage = 'url(' + image + ')';
+      if (null !== nftPreviewRef.current) nftPreviewRef.current.style.backgroundImage = 'url(' + image + ')';
+
+      if (null !== smallNftPreviewRef.current) smallNftPreviewRef.current.style.backgroundImage = 'url(' + image + ')';
     }
   }, [currentCreatingStatus]);
 

@@ -9,7 +9,7 @@ import { LogoutIcon, NearIcon, SettingsIcon, DashboardIcon, ArtIcon, LogoIcon, M
 
 import { CONTRACT_NAME } from '../config/near';
 
-export default function Navbar(props) {
+export default function Navbar(props: any) {
   const { walletConnection } = props;
 
   return (

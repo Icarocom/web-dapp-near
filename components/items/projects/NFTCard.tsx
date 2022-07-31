@@ -15,10 +15,10 @@ interface Props {
 }
 
 export const NFTCard: React.FC<Props> = ({ nft, onClick }) => {
-  const nftRef = useRef(null);
+  const nftRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    nftRef.current.style.backgroundImage = 'url(' + nft.image + ')';
+    if (nftRef.current !== null) nftRef.current.style.backgroundImage = 'url(' + nft.image + ')';
   }, []);
 
   return (

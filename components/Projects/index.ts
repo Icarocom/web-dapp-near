@@ -1,4 +1,5 @@
-export * from './subslides/AddNewProject';
-export * from './subslides/MyProjects';
-export * from './subslides/ProjectDetails';
-export * from './subslides/AddNewNFT';
+export { AddNewProject } from './subslides/AddNewProject';
+export { MyProjects } from './subslides/MyProjects';
+export { ProjectDetails } from './subslides/ProjectDetails';
+export { AddNewNFT } from './subslides/AddNewNFT';
+export { List } from './List';

@@ -21,6 +21,7 @@ export const AddNewProject: React.FC<Props> = ({ onAdded, onBack }) => {
       name: projectName,
       description: subTitle,
       image: image,
+      nfts: [],
     });
   };
 

@@ -13,10 +13,10 @@ interface Props {
 
 export const ProjectCard: React.FC<Props> = ({ project, onClick }) => {
   const url = project.image;
-  const avatarRef = useRef(null);
+  const avatarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    avatarRef.current.style.backgroundImage = `url(` + url + `)`;
+    if (avatarRef.current !== null) avatarRef.current.style.backgroundImage = `url(` + url + `)`;
   }, []);
 
   return (

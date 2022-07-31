@@ -1,5 +1,4 @@
 import React from 'react';
-// import { XYPlot, VerticalBarSeries, XAxis, YAxis, HorizontalGridLines, VerticalGridLines } from 'react-vis';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 import Metatags from 'components/Metatags';

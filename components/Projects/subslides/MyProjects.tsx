@@ -3,16 +3,10 @@ import * as React from 'react';
 import { AddProject, ProjectCard, ProjectFilter } from '../../items';
 import type { Project } from '../projectSlice';
 
-interface ProjectProp {
-  name: string;
-  description: string;
-  image: string;
-}
-
 interface Props {
   projects: Project[];
   onAdd: () => void;
-  onSelect: (project: ProjectProp) => void;
+  onSelect: (project: Project) => void;
 }
 
 export const MyProjects: React.FC<Props> = ({ onAdd, projects, onSelect }) => {

@@ -7,7 +7,7 @@ import type { Project, Projects } from './projectSlice';
 
 import { useAppDispatch, useAppSelector } from '../../lib/hooks';
 
-export function List() {
+export const List: React.FC = () => {
   const dispatch = useAppDispatch();
   const projects: HttpsCallableResult<Projects> | null = useAppSelector(selectProjects);
 
@@ -54,12 +54,7 @@ export function List() {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {projects?.data?.data.map((project: Project, index: number) => (
-                  <Row
-                    key={index}
-                    name={project.name}
-                    description={project.description}
-                    timestamp={project.timestamp}
-                  />
+                  <Row key={index} name={project.name} description={project.description} timestamp="" />
                 ))}
               </tbody>
             </table>
@@ -68,4 +63,4 @@ export function List() {
       </div>
     </div>
   );
-}
+};

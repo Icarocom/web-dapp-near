@@ -5,27 +5,17 @@ import { BackIcon, EditIcon, ShareIcon, DeleteIcon, VoucherIcon, PlusIcon } from
 import { SwitchBox, DropDown } from 'components/items/elements';
 import { NFTCard } from 'components/items';
 import { CloseIcon, MapIcon } from 'components/icons';
+import { useAppSelector } from 'lib/hooks';
+import { AppState } from 'lib/store';
 
 import { AddNewNFT } from './AddNewNFT';
 
-interface ProjectProp {
-  name: string;
-  description: string;
-  image: string;
-}
+import { Project, NFTProp } from '../projectSlice';
 
 interface Props {
-  project: ProjectProp;
+  project: Project;
   onBack: () => void;
-}
-
-interface NFTProp {
-  name: string;
-  description: string;
-  image: string;
-  label: string;
-  position: string;
-  status: boolean;
+  onNewNFT: (nft: NFTProp, selectedProj: Project) => void;
 }
 
 const DEFAULT_NFT_VIEW_BOX_CLASSES = clsx('fixed top-0 w-full h-full backdrop-brightness-95 transition-all delay-500');
@@ -38,43 +28,13 @@ const DEFAULT_NFT_VIEW_CLASSES = clsx(
 const HIDDEN_NFT_VIEW_CLASSES = clsx('right-full');
 const SHOWN_NFT_VIEW_CLASSES = clsx('right-0');
 
-export const ProjectDetails: React.FC<Props> = ({ project, onBack }) => {
-  const logoRef = useRef(null);
-  const nftViewRef = useRef(null);
-  const [nfts, setNfts] = useState<NFTProp[]>([
-    {
-      name: 'COOL PIZZA',
-      description: 'By owning this NFT, you will be able get $2 off voucher.',
-      image: '/pizza/1.png',
-      label: '$3 off NFT voucher',
-      position: 'Picadelia 13th St, New York, NY 10011',
-      status: true,
-    },
-    {
-      name: 'COOL PIZZA',
-      description: 'By owning this NFT, you will be able get $2 off voucher.',
-      image: '/pizza/2.png',
-      label: '$3 off NFT voucher',
-      position: 'Picadelia 13th St, New York, NY 10011',
-      status: true,
-    },
-    {
-      name: 'COOL PIZZA',
-      description: 'By owning this NFT, you will be able get $2 off voucher.',
-      image: '/pizza/3.png',
-      label: '$3 off NFT voucher',
-      position: 'Picadelia 13th St, New York, NY 10011',
-      status: true,
-    },
-    {
-      name: 'COOL PIZZA',
-      description: 'By owning this NFT, you will be able get $2 off voucher.',
-      image: '/pizza/4.png',
-      label: '$3 off NFT voucher',
-      position: 'Picadelia 13th St, New York, NY 10011',
-      status: true,
-    },
-  ]);
+export const ProjectDetails: React.FC<Props> = ({ project, onBack, onNewNFT }) => {
+  const projs = useAppSelector((state: AppState) => state.projects);
+
+  const logoRef = useRef<HTMLDivElement>(null);
+  const nftViewRef = useRef<HTMLDivElement>(null);
+
+  const [nfts, setNfts] = useState<NFTProp[]>(project.nfts);
   const availablePageStatus = {
     explorer: 'explorer',
     adding: 'adding',
@@ -87,16 +47,20 @@ export const ProjectDetails: React.FC<Props> = ({ project, onBack }) => {
 
   const [isNFTActive, setIsNFTActive] = useState(true);
 
-  const addNewNFT = (nft: NFTProp) => {
-    setNfts([...nfts, nft]);
-  };
-
   useEffect(() => {
     if (pageStatus == availablePageStatus.explorer) {
-      logoRef.current.style.backgroundImage = 'url(' + project.image + ')';
-      nftViewRef.current.style.backgroundImage = 'url(' + selectedNFT?.image + ')';
+      if (null !== logoRef.current) logoRef.current.style.backgroundImage = 'url(' + project.image + ')';
+
+      if (null !== nftViewRef.current) nftViewRef.current.style.backgroundImage = 'url(' + selectedNFT?.image + ')';
     }
   }, [selectedNFT, pageStatus]);
+
+  useEffect(() => {
+    projs.projects?.data.map((proj, index) => {
+      if (proj.name === project.name && proj.description === project.description && proj.image === project.image)
+        setNfts(proj.nfts);
+    });
+  }, [projs]);
 
   return (
     <div className="relative w-full">
@@ -246,6 +210,7 @@ export const ProjectDetails: React.FC<Props> = ({ project, onBack }) => {
         <AddNewNFT
           onAdded={() => setPageStatus(availablePageStatus.explorer)}
           onBack={() => setPageStatus(availablePageStatus.explorer)}
+          onNewNFT={(nft: NFTProp) => onNewNFT(nft, project)}
         />
       )}
     </div>

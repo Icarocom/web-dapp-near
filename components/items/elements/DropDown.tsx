@@ -16,19 +16,19 @@ interface Props {
 }
 
 export const DropDown: React.FC<Props> = ({ name, value, label, className, items }) => {
-  const dropDownRef = useRef(null);
+  const dropDownRef = useRef<HTMLDivElement>(null);
 
   const [selectedValue, setSelectedValue] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClickOutside = (event: React.MouseEvent) => {
-    if (dropDownRef.current && !dropDownRef.current.contains(event.target)) {
+  const handleClickOutside = (event: React.MouseEvent<HTMLElement>) => {
+    if (dropDownRef.current && !dropDownRef.current.contains(event.target as any)) {
       setIsOpen(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', (event) => handleClickOutside(event));
+    document.addEventListener('mousedown', (event) => handleClickOutside(event as any));
   }, [dropDownRef]);
 
   return (

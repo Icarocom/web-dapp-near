@@ -3,17 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { AddNewProject, MyProjects, ProjectDetails } from 'components/Projects';
 import type { AppState } from 'lib/store';
 
-import { createProjectAsync, projectsAsync } from '../components/Projects/projectSlice';
+import { createProjectAsync, NFTProp, projectsAsync } from '../components/Projects/projectSlice';
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import type { Project } from '../components/Projects/projectSlice';
-import { addProjectAction } from '../components/Projects/projectSlice';
+import { addProjectAction, addNewNFTAction } from '../components/Projects/projectSlice';
 import Metatags from '../components/Metatags';
-
-interface ProjectProp {
-  name: string;
-  description: string;
-  image: string;
-}
 
 export default function Projects() {
   const dispatch = useAppDispatch();
@@ -28,10 +22,11 @@ export default function Projects() {
 
   const [status, setStatus] = useState(allStatus.explorer);
   const [projects, setProjects] = useState<Project[]>(projs.projects?.data == undefined ? [] : projs.projects?.data);
-  const [selectedProject, setSelectedProject] = useState<ProjectProp>({
+  const [selectedProject, setSelectedProject] = useState<Project>({
     name: 'cool pizza',
     description: '2$',
     image: '/user.png',
+    nfts: [],
   });
 
   useEffect(() => {
@@ -48,6 +43,16 @@ export default function Projects() {
     setStatus(allStatus.explorer);
   };
 
+  const onAddNewNFT = (nft: NFTProp, project: Project) => {
+    const updatedProjects = projects.map((proj, index) => {
+      if (proj === project) {
+        return { ...proj, nfts: [...proj.nfts, nft] };
+      } else return proj;
+    });
+
+    dispatch(addNewNFTAction(updatedProjects));
+  };
+
   return (
     <main>
       <Metatags title="Projects" description="Explore my projects" />
@@ -56,7 +61,7 @@ export default function Projects() {
           <MyProjects
             projects={projects}
             onAdd={() => setStatus(allStatus.add)}
-            onSelect={(project: ProjectProp) => {
+            onSelect={(project: Project) => {
               setSelectedProject(project);
               setStatus(allStatus.details);
             }}
@@ -66,7 +71,11 @@ export default function Projects() {
           <AddNewProject onAdded={(project) => addProject(project)} onBack={() => setStatus('explorer')} />
         )}
         {status == allStatus.details && (
-          <ProjectDetails onBack={() => setStatus(allStatus.explorer)} project={selectedProject} />
+          <ProjectDetails
+            onBack={() => setStatus(allStatus.explorer)}
+            project={selectedProject}
+            onNewNFT={(nft: NFTProp, project: Project) => onAddNewNFT(nft, project)}
+          />
         )}
       </div>
     </main>
