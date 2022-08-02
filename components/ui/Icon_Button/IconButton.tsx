@@ -5,7 +5,7 @@ type ButtonProps = Omit<React.ComponentPropsWithoutRef<'button'>, 'children'> & 
   /**
    * required svg icon
    */
-  Icon: React.forwardRef<SVGSVGElement, React.ComponentPropsWithoutRef<'svg'>>;
+  Icon: React.ReactNode;
   /**
    * required aria-label
    */
@@ -50,7 +50,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, ButtonProps>((prop
 
   return (
     <button ref={ref} aria-label={ariaLabel} type="button" className={classes} disabled={isDisabled || isLoading}>
-      <Icon />
+      {Icon}
     </button>
   );
 });

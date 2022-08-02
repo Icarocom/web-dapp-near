@@ -15,7 +15,13 @@ export async function initContract() {
   const keyStore = new keyStores.BrowserLocalStorageKeyStore();
 
   // Initializing connection to the NEAR testnet
-  const near = await connect({ keyStore, ...nearConfig });
+  const near = await connect({
+    headers: {
+      empty: '',
+    },
+    keyStore,
+    ...nearConfig,
+  });
 
   // Initialize wallet connection
   const walletConnection = new WalletConnection(near, 'catch');
