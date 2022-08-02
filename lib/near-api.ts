@@ -16,9 +16,7 @@ export async function initContract() {
 
   // Initializing connection to the NEAR testnet
   const near = await connect({
-    headers: {
-      empty: '',
-    },
+    headers: {},
     keyStore,
     ...nearConfig,
   });

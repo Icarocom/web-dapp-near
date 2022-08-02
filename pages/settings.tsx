@@ -6,8 +6,8 @@ import { FreeMode } from 'swiper';
 import { CloseIcon, NearIcon } from 'components/icons';
 import Metatags from 'components/Metatags';
 import { Input, SwitchBox } from 'components/items/elements';
-
 import 'swiper/css';
+import { CountrySelector } from 'components/items/elements/CountrySelector';
 
 const DEFAULT_MODAL_CLASSES = clsx('transition-all delay-300');
 const HIDE_MODAL_CLASSES = clsx('hidden');
@@ -16,6 +16,7 @@ export default function Settings() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [country, setCountry] = useState('');
   const [address, setAddress] = useState('');
 
   const [isReceiveNotice, setReceiveNotice] = useState(true);
@@ -105,6 +106,12 @@ export default function Settings() {
                   <Input label="First name" value={firstName} onChange={(firstName) => setFirstName(firstName)} />
                   <Input label="Last name" value={lastName} onChange={(lastName) => setLastName(lastName)} />
                   <Input label="Email address" value={email} onChange={(email) => setEmail(email)} />
+                  <CountrySelector
+                    className="border-darkGrey w-full rounded-lg"
+                    onChange={(country: string) => {
+                      setCountry(country);
+                    }}
+                  />
                   <Input label="Address" value={address} onChange={(address) => setAddress(address)} />
                 </div>
                 <button className="bg-primary hover:bg-secondary text-white w-72 sm:w-80 mt-10 py-4 rounded-lg transition-all delay-300 shadow-2xl font-bold">

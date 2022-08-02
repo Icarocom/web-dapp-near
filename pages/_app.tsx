@@ -25,8 +25,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [nearConfig, setNearConfig] = useState<any | null>(null);
   const [walletConnection, setWalletConnection] = useState<WalletConnection | null>(null);
 
-  const AnyComponent = Component as any;
-
   useEffect(() => {
     initContract().then(({ contract, currentUser, nearConfig, walletConnection }) => {
       setContract(contract);
@@ -40,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Provider store={store}>
       <div className="relative">
         {walletConnection ? <Navbar walletConnection={walletConnection} user={nearUser} /> : null}
-        <AnyComponent {...pageProps} />
+        <Component {...pageProps} />
         <Toaster />
       </div>
     </Provider>

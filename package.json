@@ -17,7 +17,6 @@
     "clsx": "^1.1.1",
     "firebase": "^9.6.3",
     "framer-motion": "^6.2.8",
-    "google-maps-react": "^2.0.6",
     "lodash.debounce": "^4.0.8",
     "near-api-js": "^0.44.2",
     "next": "12.0.8",
@@ -27,6 +26,7 @@
     "react-firebase-hooks": "^4.0.2",
     "react-hot-toast": "^2.2.0",
     "react-redux": "^7.2.6",
+    "react-select-country-list": "^2.2.3",
     "react-vis": "^1.11.7",
     "swiper": "^8.3.1"
   },
